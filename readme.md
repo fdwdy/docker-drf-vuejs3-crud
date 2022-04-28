@@ -2,7 +2,7 @@
 
 <h3>Start:</h3>
 clone repo
-cd shipments<br/>
+cd docker-drf-vuejs3-crud<br/>
 docker compose build<br/>
 docker compose up<br/>
 
