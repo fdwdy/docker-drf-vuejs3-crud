@@ -1,0 +1,37 @@
+version: '3.3'
+
+services:
+  db:
+    image: postgres
+    container_name: shipments-db
+    env_file:
+      - .env.db
+    ports:
+        - "5434:5434"
+    command: -p 5434
+  django:
+    build:
+      context: .
+      dockerfile: docker/BackendDockerfile
+    container_name: shipments-backend
+    command: ../docker/backend_setup.sh
+    env_file:
+      - .env
+      - .env.docker
+    volumes:
+      - .:/app
+    ports:
+      - "8002:8002"
+    depends_on:
+      - db
+  vue:
+    build:
+      context: .
+      dockerfile: docker/FrontendDockerfile
+    container_name: shipments-frontend
+    volumes:
+      - .:/app
+    ports:
+      - "8080:80"
+    depends_on:
+      - django
